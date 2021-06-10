@@ -1,8 +1,8 @@
 // Copyright 2021 GHA Test Team
 
 #include "TimedDoor.h"
-#include <chrono>
-#include <thread>
+#include <ctime>
+#include <string>
 
 TimedDoor::TimedDoor(int time) {
     iTimeout = time;
@@ -22,7 +22,11 @@ void Timer::tregister(int sleepTime, TimerClient *adapter) {
 }
 
 void Timer::sleep(int sleepTime) {
-    std::this_thread::sleep_for(std::chrono::seconds(sleepTime));
+    time_t tic = time(0);
+    time_t toc = time(0);
+    while (tic != toc + sleepTime) {
+        toc = time(0);
+    }
 }
 
 void DoorTimerAdapter::Timeout() {
